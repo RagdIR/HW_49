@@ -9,6 +9,8 @@
 
 {% block content %}
     <h1>{{ task.summary}}</h1>
-    <p>{{ task.description }}</p>
-    <p>{{ task.created_at|date:"d.m.Y H:i:s" }}</p>
+    <p><b>Описание:</b> {{ task.description }}</p>
+    <p><b>Добавлена:</b> {{ task.created_at|date:"d.m.Y H:i:s" }}</p>
+    <p><b>Тип:</b> {{ task.type }}</p>
+    <p><b>Статус:</b> {{ task.status }}</p>
 {% endblock %}

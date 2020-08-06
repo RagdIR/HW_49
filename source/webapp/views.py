@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponseNotAllowed
 from django.views.generic import View, TemplateView
-from webapp.models import Task
-from webapp.forms import TaskForm
+from .models import Task
+from .forms import TaskForm
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'
+
     def get(self, request):
         is_admin = request.GET.get('is_admin', None)
         data = Task.objects.all()
@@ -82,12 +83,16 @@ class TaskUpdateView(TemplateView):
 
 
 class TaskDeleteView(TemplateView):
-    template_name = 'task_update.html'
+    template_name = 'task_delete.html'
 
-    def task_delete_view(self, request, pk):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pk = self.kwargs.get('pk')
         task = get_object_or_404(Task, pk=pk)
-        if request.method == 'GET':
-            return render(request, 'task_delete.html', context={'task': task})
-        elif request.method == 'POST':
-            task.delete()
-            return redirect('index')
+        context['task'] = task
+        return context
+
+    def post(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        task.delete()
+        return redirect('index')

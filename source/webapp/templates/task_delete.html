@@ -8,7 +8,10 @@
 
 {% block content %}
     <h1>Вы уверены, что хотите удалить задачу"{{ task.summary }}"?</h1>
-    <p>{{ task.created_at }}</p>
+    <p><b>Описание:</b> {{ task.description }}</p>
+    <p><b>Добавлена:</b> {{ task.created_at|date:"d.m.Y H:i:s" }}</p>
+    <p><b>Тип:</b> {{ task.type }}</p>
+    <p><b>Статус:</b> {{ task.status }}</p>
     <form action="{% url "task_delete" task.pk %}" method="post">
         {% csrf_token %}
         <p><input type="submit" value="Да"></p>
