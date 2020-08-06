@@ -1,0 +1,95 @@
+[
+{
+  "model": "webapp.task",
+  "pk": 2,
+  "fields": {
+    "summary": "\u0420\u0432\u0430\u043a\u0435\u0440",
+    "description": "\u0440\u0433\u0440\u043b \u0440\u043b\u043e\u043e\u043b\u043e\u043b \u043e\u043b\u0434\u043e \u043b\u0434\u043e \u0434\u043b\u043e \u043e \u043b\u043e\u043b\u043e \u043b\u0434\u043e \u043b\u043e\u043b\u0434",
+    "type": 1,
+    "status": 3,
+    "created_at": "2020-08-06T10:02:28.195Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 3,
+  "fields": {
+    "summary": "dfgfdg fdgfg fd fgfdffhdfg gfgdg  gfdgf",
+    "description": "fdgfd gfdg g g g fdg dfgfdgfg fgfdg dfg dfg df gg dfgfdg dfgdfg df",
+    "type": 3,
+    "status": 3,
+    "created_at": "2020-08-06T10:47:16.701Z"
+  }
+},
+{
+  "model": "webapp.task",
+  "pk": 4,
+  "fields": {
+    "summary": "Tratatata tat a atat",
+    "description": "\u0440\u0433\u0433 \u0440\u0433\u0433\u0448 \u0440\u0440 \u043b\u043e\u043e \u043b\u043e\u043b \u0440\u043e\u043b\u043e \u0442 \u043e\u0440\u043e\u043b\u0440 \u0442 \u0438\u0442 \u044c\u0442\u0440 \u0442 \u0442\u043c\u0438\u0430 \u043f\u0430\u0432 \u0430\u0430\u0440\u043e \u0431 \u0431\u044c \u0442\u0438\u0438 \u0441\u043c\u0438 \u043f \u0440\u0440\u043b \u043e\u044e\u0431 \u0442\u044c\u0438 \u0441 \u043c\u0441\u043c \u0441 \u0442\u0440 \u044c\u0442 \u044c\u0438 \u0438\u043c\u0438\u043c \u0441\u043f\u043f \u0431\u043e\u044c\u0431",
+    "type": 2,
+    "status": 2,
+    "created_at": "2020-08-06T10:55:02.423Z"
+  }
+},
+{
+  "model": "webapp.type",
+  "pk": 1,
+  "fields": {
+    "title": "\u0417\u0430\u0434\u0430\u0447\u0430"
+  }
+},
+{
+  "model": "webapp.type",
+  "pk": 2,
+  "fields": {
+    "title": "\u041e\u0448\u0438\u0431\u043a\u0430"
+  }
+},
+{
+  "model": "webapp.type",
+  "pk": 3,
+  "fields": {
+    "title": "\u0423\u043b\u0443\u0447\u0448\u0435\u043d\u0438\u0435"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 1,
+  "fields": {
+    "title": "\u041d\u043e\u0432\u0430\u044f"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 2,
+  "fields": {
+    "title": "\u0412 \u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435"
+  }
+},
+{
+  "model": "webapp.status",
+  "pk": 3,
+  "fields": {
+    "title": "\u0412\u044b\u043f\u043e\u043b\u043d\u0435\u043d\u0430"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$GkSW8HGGUEve$bwWIk0djS2LtNDMFWw/BMTwSgLLBxmgfCGuKoFGSqXs=",
+    "last_login": "2020-08-06T06:38:10.309Z",
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2020-08-06T06:34:35.862Z",
+    "groups": [],
+    "user_permissions": []
+  }
+}
+]
