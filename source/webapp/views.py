@@ -26,10 +26,26 @@ class TaskView(TemplateView):
 
 
 class TaskCreateView(FormView):
-    # template_name = 'task_create.html'
-    # form_class = TaskForm
-    #
-    #
+    template_name = 'task_create.html'
+    form_class = TaskForm
+
+    def get_initial(self):
+        initial = {}
+        for key in 'summary', 'description', 'type', 'status':
+            initial[key] = getattr(self.tasks, key)
+        initial['status'] = self.tasks.status.all()
+        initial['type'] = self.tasks.type.all()
+        return initial
+
+    def form_valid(self, form):
+        data = {}
+        for key, value in form.cleaned_data.items():
+            if value is not None:
+                data[key] = value
+        task = Task.objects.create(**data)
+
+
+
     # def dispatch(self, request, *args, **kwargs):
     #     self.tasks = self.get_object()
     #     return super().dispatch(request, *args, **kwargs)
@@ -97,27 +113,21 @@ class TaskUpdateView(FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        tasks = Task.objects.all()
-        context['tasks'] = tasks
+        context['tasks'] = self.tasks
         return context
 
     def get_initial(self):
         initial = {}
         for key in 'summary', 'description', 'type', 'status':
             initial[key] = getattr(self.tasks, key)
-        initial['status'] = self.tasks.status.all()
-        initial['type'] = self.tasks.type.all()
         return initial
 
     def form_valid(self, form):
-        status = form.cleaned_data.pop('status')
-        type = form.cleaned_data.pop('type')
-        for key in form.cleaned_data.items():
+        for key, value in form.cleaned_data.items():
             if value is not None:
                 setattr(self.tasks, key, value)
         self.tasks.save()
-        self.tasks.status.set(status)
-        self.tasks.type.set(type)
+        return super().form_valid(form)
 
 
     def get_success_url(self):

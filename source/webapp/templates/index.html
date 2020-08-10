@@ -5,11 +5,11 @@
 {% block content %}
     <h1>Задачи</h1>
     {% for task in tasks %}
-        <h3><a href="{% url "task_view" task.pk %}">{{ task.summary }}</a></h3>
+        <h3><a href="{% url "task_view" tasks.pk %}">{{ task.summary }}</a></h3>
         <p>Статус: {{ task.status }}</p>
         <p>Тип: {{ task.type }}</p>
         <p>Добавлена: {{ task.created_at|date:"d.m.Y H:i:s" }}</p>
-        <p><a href="{% url 'task_update' task.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>
+        <p><a href="{% url 'task_update' tasks.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>
         <hr>
     {% endfor %}
 {% endblock %}
