@@ -17,8 +17,7 @@ from django.db import models
 class Task(models.Model):
     summary = models.CharField(max_length=300, null=False, blank=False, verbose_name='Краткое описание')
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Описание')
-    type = models.ForeignKey('webapp.Type', related_name='type',
-                             on_delete=models.PROTECT, verbose_name='Тип')
+    type = models.ManyToManyField('webapp.Type', related_name='type', verbose_name='Тип')
     status = models.ForeignKey('webapp.Status', related_name='status',
                                on_delete=models.PROTECT, verbose_name='Статус')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')

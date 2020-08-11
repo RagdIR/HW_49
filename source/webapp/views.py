@@ -5,8 +5,9 @@ from .models import Task
 from .forms import TaskForm
 
 
-class IndexView(FormView):
+class IndexView(TemplateView):
     template_name = 'index.html'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tasks = Task.objects.all()
@@ -29,77 +30,37 @@ class TaskCreateView(FormView):
     template_name = 'task_create.html'
     form_class = TaskForm
 
-    def get_initial(self):
-        initial = {}
-        for key in 'summary', 'description', 'type', 'status':
-            initial[key] = getattr(self.tasks, key)
-        initial['status'] = self.tasks.status.all()
-        initial['type'] = self.tasks.type.all()
-        return initial
-
     def form_valid(self, form):
         data = {}
+        type = form.cleaned_data.pop('type')
         for key, value in form.cleaned_data.items():
             if value is not None:
                 data[key] = value
-        task = Task.objects.create(**data)
+        self.tasks = Task.objects.create(**data)
+        self.tasks.type.set(type)
+        return super().form_valid(form)
 
+    def get_success_url(self):
+        return reverse('task_view', kwargs={'pk': self.tasks.pk})
 
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     self.tasks = self.get_object()
-    #     return super().dispatch(request, *args, **kwargs)
+    # def get(self, request):
+    #     return render(request, 'task_create.html', context={
+    #         'form': TaskForm()
+    #     })
     #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     tasks = Task.objects.all()
-    #     context['tasks'] = tasks
-    #     return context
-    #
-    # def get_initial(self):
-    #     initial = {}
-    #     for key in 'summary', 'description', 'type', 'status':
-    #         initial[key] = getattr(self.tasks, key)
-    #     initial['status'] = self.tasks.status.all()
-    #     initial['type'] = self.tasks.type.all()
-    #     return initial
-    #
-    # def form_valid(self, form):
-    #     status = form.cleaned_data.pop('status')
-    #     type = form.cleaned_data.pop('type')
-    #     for key in form.cleaned_data.items():
-    #         if value is not None:
-    #             setattr(self.tasks, key, value)
-    #     self.tasks.save()
-    #     self.tasks.status.set(status)
-    #     self.tasks.type.set(type)
-    #
-    #
-    # def get_success_url(self):
-    #     return reverse('index', kwargs={'pk': self.tasks.pk})
-    #
-    # def get_object(self):
-    #     pk = self.kwargs.get('pk')
-    #     return get_object_or_404(Task, pk=pk)
-
-    def get(self, request):
-        return render(request, 'task_create.html', context={
-            'form': TaskForm()
-        })
-
-    def post(self, request):
-        form = TaskForm(data=request.POST)
-        if form.is_valid():
-            data = {}
-            for key, value in form.cleaned_data.items():
-                if value is not None:
-                    data[key] = value
-            task = Task.objects.create(**data)
-            return redirect('task_view', pk=task.pk)
-        else:
-            return render(request, 'task_create.html', context={
-                'form': form
-            })
+    # def post(self, request):
+    #     form = TaskForm(data=request.POST)
+    #     if form.is_valid():
+    #         data = {}
+    #         for key, value in form.cleaned_data.items():
+    #             if value is not None:
+    #                 data[key] = value
+    #         task = Task.objects.create(**data)
+    #         return redirect('task_view', pk=task.pk)
+    #     else:
+    #         return render(request, 'task_create.html', context={
+    #             'form': form
+    #         })
 
 
 class TaskUpdateView(FormView):
@@ -118,15 +79,18 @@ class TaskUpdateView(FormView):
 
     def get_initial(self):
         initial = {}
-        for key in 'summary', 'description', 'type', 'status':
+        for key in 'summary', 'description', 'status':
             initial[key] = getattr(self.tasks, key)
+        initial['type'] = self.tasks.type.all()
         return initial
 
     def form_valid(self, form):
+        type = form.cleaned_data.pop('type')
         for key, value in form.cleaned_data.items():
             if value is not None:
                 setattr(self.tasks, key, value)
         self.tasks.save()
+        self.tasks.type.set(type)
         return super().form_valid(form)
 
 
