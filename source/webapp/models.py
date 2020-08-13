@@ -1,21 +1,10 @@
 from django.db import models
-#
-# TASK_CHOICES = [
-#     ('task', 'Задача'),
-#     ('bug', 'Ошибка'),
-#     ('enhancement', 'Улучшение')
-# ]
-#
-#
-# STATUS_CHOICES = [
-#     ('new', 'Новая'),
-#     ('in_progress', 'В процессе'),
-#     ('done', 'Выполнено')
-# ]
+from django.core.validators import MinLengthValidator
 
 
 class Task(models.Model):
-    summary = models.CharField(max_length=300, null=False, blank=False, verbose_name='Краткое описание')
+    summary = models.CharField(max_length=300, null=False, blank=False, verbose_name='Краткое описание',
+                               validators=[MinLengthValidator(3)])
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Описание')
     type = models.ManyToManyField('webapp.Type', related_name='type', verbose_name='Тип')
     status = models.ForeignKey('webapp.Status', related_name='status',

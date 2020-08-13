@@ -95,7 +95,7 @@ class TaskUpdateView(FormView):
 
 
     def get_success_url(self):
-        return reverse('index', kwargs={'pk': self.tasks.pk})
+        return reverse('task_view', kwargs={'pk': self.tasks.pk})
 
     def get_object(self):
         pk = self.kwargs.get('pk')
