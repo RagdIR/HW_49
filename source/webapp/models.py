@@ -1,16 +1,18 @@
 from django.db import models
-from django.core.validators import MinLengthValidator
+from .validations import symbols_3, symbols_20
 
 
 class Task(models.Model):
     summary = models.CharField(max_length=300, null=False, blank=False, verbose_name='Краткое описание',
-                               validators=[MinLengthValidator(3)])
+                               validators=[symbols_3])
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Описание',
-                                   validators=[MinLengthValidator(20)])
+                                   validators=[symbols_20])
     type = models.ManyToManyField('webapp.Type', related_name='type', verbose_name='Тип')
     status = models.ForeignKey('webapp.Status', related_name='status',
                                on_delete=models.PROTECT, verbose_name='Статус')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Время изменения')
+
 
     def __str__(self):
         return self.summary
