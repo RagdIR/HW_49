@@ -11,6 +11,7 @@
     <h1>{{ task.summary}}</h1>
     <p><b>Описание:</b> {{ task.description }}</p>
     <p><b>Добавлена:</b> {{ task.created_at|date:"d.m.Y H:i:s" }}</p>
+    <p><b>Обновлена:</b> {{ task.updated_at|date:"d.m.Y H:i:s" }}</p>
     <p><b>Тип:</b> {% for type in task.type.all %}
     {{ type.title }}
     {% endfor %}

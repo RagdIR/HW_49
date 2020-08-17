@@ -11,7 +11,7 @@
     {{ type.title }}
             {% if not forloop.last %}, {% endif %}
     {% endfor %}</p>
-        <p>Добавлена: {{ task.created_at|date:"d.m.Y H:i:s" }}</p>
+        <p>Добавлена: {{ task.created_at|date:"d.m.Y H:i:s" }} | Обновлена: {{ task.updated_at|date:"d.m.Y H:i:s" }}</p>
         <p><a href="{% url 'task_update' task.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>
         <hr>
     {% endfor %}

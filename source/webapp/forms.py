@@ -5,15 +5,6 @@ from django.utils.deconstruct import deconstructible
 from .models import Task
 
 
-def at_least_3(string):
-    if len(string) < 3:
-        raise ValidationError('Слишком короткая запись! Должно быть не меньше 3 символов!')
-
-def at_least_20(string):
-    if len(string) < 20:
-        raise ValidationError('Слишком короткая запись! Должно быть не меньше 20 символов!')
-
-
 @deconstructible
 class MinLengthValidator(BaseValidator):
     message = 'У записи "%(value)" символов %(show_value) ! Должно быть не меньше %(limit_value) символов!'
