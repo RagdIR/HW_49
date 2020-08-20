@@ -1,18 +1,44 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.views.generic import View, TemplateView, FormView
+from django.views.generic import ListView, TemplateView, FormView
 from .models import Task
-from .forms import TaskForm
+from .forms import TaskForm, SimpleSearchForm
 
 
-class IndexView(TemplateView):
+
+class IndexView(ListView):
     template_name = 'index.html'
+    context_object_name = 'tasks'
+    paginate_by = 10
+    paginate_orphans = 2
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        tasks = Task.objects.all()
-        context['tasks'] = tasks
-        return context
+    def get_context_data(self, *, object_list=None, **kwargs):
+        form = SimpleSearchForm(self.request.GET)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            kwargs['search'] = search
+        kwargs['form'] = form
+        return super().get_context_data(object_list=object_list, **kwargs)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     tasks = Task.objects.all()
+    #     context['tasks'] = tasks
+    #     return context
+
+    def get_queryset(self):
+        data = Task.objects.all()
+        #
+        # is_admin = self.request.GET.get('is_admin', None)
+        # if not is_admin:
+        #     data = Task.objects.filter('-created_at')
+        form = SimpleSearchForm(data=self.request.GET)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            if search:
+                data = data.filter(Q(summary__icontains=search) | Q(description__icontains=search))
+        return data.order_by('-created_at')
 
 
 class TaskView(TemplateView):
