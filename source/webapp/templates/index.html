@@ -3,12 +3,12 @@
 {% block title %}Задачи{% endblock %}
 
 {% block search %}
-    <div class="search-form">
-        <form action="{% url 'index' %}" method="GET">
-            {{ form.search }}
-            <input type="submit" value="Найти">
-        </form>
-    </div>
+            <div class="search-form">
+                <form action="{% url 'index' %}" method="GET">
+                    {{ form.search }}
+                    <input type="submit" value="Найти">
+                </form>
+            </div>
 {% endblock %}
 
 {% block content %}

@@ -161,3 +161,7 @@ class TaskDeleteView(TemplateView):
         task = get_object_or_404(Task, pk=pk)
         task.delete()
         return redirect('index')
+
+class SearchView(ListView):
+    template_name = 'task_search.html'
+    model = Task
