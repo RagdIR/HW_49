@@ -2,8 +2,8 @@ from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.views.generic import ListView, TemplateView, FormView
-from .models import Task
-from .forms import TaskForm, SimpleSearchForm
+from webapp.models import Task
+from webapp.forms import TaskForm, SimpleSearchForm
 
 
 
@@ -162,6 +162,5 @@ class TaskDeleteView(TemplateView):
         task.delete()
         return redirect('index')
 
-class SearchView(ListView):
-    template_name = 'task_search.html'
-    model = Task
+
+

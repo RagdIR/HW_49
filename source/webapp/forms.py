@@ -2,7 +2,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import BaseValidator
 from django.utils.deconstruct import deconstructible
-from .models import Task
+from .models import Task, Project
 
 
 @deconstructible
@@ -17,13 +17,13 @@ class MinLengthValidator(BaseValidator):
         return len(value)
 
 
-class TaskForm(forms.ModelForm):
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'start_date_at', 'end_date_at']
 
-    #
-    # summary = forms.CharField(max_length=300, required=True, label='Краткое описание',
-    #                           validators=(at_least_3,))
-    # description = forms.CharField(max_length=3000, required=False, label='Описание', widget=forms.Textarea,
-    #                               validators=(at_least_20))
+
+class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['summary', 'description', 'type', 'status']
@@ -31,9 +31,6 @@ class TaskForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        # print(cleaned_data['summary']) ## отладка
-        # print(cleaned_data['description']) ## отладка
-        # print(cleaned_data['summary'] == cleaned_data['description']) ## отладка
         if cleaned_data['summary'] == cleaned_data['description']:
             raise ValidationError("Нельзя, чтобы краткое описание совпадало с описанием")
         return cleaned_data
