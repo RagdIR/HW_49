@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Задача{% endblock %}
+{% block title %}Задача {{ task.summary }}{% endblock %}
 
 {% block menu %}
     <li><a href="{% url 'task_update' task.pk %}">Изменить</a></li>

@@ -1,48 +1,47 @@
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.views.generic import ListView, TemplateView, FormView
-from webapp.models import Task
+from django.views.generic import ListView, TemplateView, FormView, CreateView
+from webapp.models import Task, Project
 from webapp.forms import TaskForm, SimpleSearchForm
 
 
-
-class IndexView(ListView):
-    template_name = 'index.html'
-    context_object_name = 'tasks'
-    paginate_by = 10
-    paginate_orphans = 2
-
-    def get_context_data(self, *, object_list=None, **kwargs):
-        form = SimpleSearchForm(self.request.GET)
-        if form.is_valid():
-            search = form.cleaned_data['search']
-            kwargs['search'] = search
-        kwargs['form'] = form
-        return super().get_context_data(object_list=object_list, **kwargs)
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     tasks = Task.objects.all()
-    #     context['tasks'] = tasks
-    #     return context
-
-    def get_queryset(self):
-        data = Task.objects.all()
-        #
-        # is_admin = self.request.GET.get('is_admin', None)
-        # if not is_admin:
-        #     data = Task.objects.filter('-created_at')
-        form = SimpleSearchForm(data=self.request.GET)
-        if form.is_valid():
-            search = form.cleaned_data['search']
-            if search:
-                data = data.filter(Q(summary__icontains=search) | Q(description__icontains=search))
-        return data.order_by('-created_at')
+# class IndexView(ListView):
+#     template_name = 'index.html'
+#     context_object_name = 'tasks'
+#     paginate_by = 10
+#     paginate_orphans = 2
+#
+#     def get_context_data(self, *, object_list=None, **kwargs):
+#         form = SimpleSearchForm(self.request.GET)
+#         if form.is_valid():
+#             search = form.cleaned_data['search']
+#             kwargs['search'] = search
+#         kwargs['form'] = form
+#         return super().get_context_data(object_list=object_list, **kwargs)
+#
+#     # def get_context_data(self, **kwargs):
+#     #     context = super().get_context_data(**kwargs)
+#     #     tasks = Task.objects.all()
+#     #     context['tasks'] = tasks
+#     #     return context
+#
+#     def get_queryset(self):
+#         data = Task.objects.all()
+#         #
+#         # is_admin = self.request.GET.get('is_admin', None)
+#         # if not is_admin:
+#         #     data = Task.objects.filter('-created_at')
+#         form = SimpleSearchForm(data=self.request.GET)
+#         if form.is_valid():
+#             search = form.cleaned_data['search']
+#             if search:
+#                 data = data.filter(Q(summary__icontains=search) | Q(description__icontains=search))
+#         return data.order_by('-created_at')
 
 
 class TaskView(TemplateView):
-    template_name = 'task_view.html'
+    template_name = 'task/task_view.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -52,39 +51,39 @@ class TaskView(TemplateView):
         return context
 
 
-class TaskCreateView(FormView):
-    template_name = 'task_create.html'
-    form_class = TaskForm
-
-    def form_valid(self, form):
-        self.tasks = form.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse('task_view', kwargs={'pk': self.tasks.pk})
-
-    # def get(self, request):
-    #     return render(request, 'task_create.html', context={
-    #         'form': TaskForm()
-    #     })
-    #
-    # def post(self, request):
-    #     form = TaskForm(data=request.POST)
-    #     if form.is_valid():
-    #         data = {}
-    #         for key, value in form.cleaned_data.items():
-    #             if value is not None:
-    #                 data[key] = value
-    #         task = Task.objects.create(**data)
-    #         return redirect('task_view', pk=task.pk)
-    #     else:
-    #         return render(request, 'task_create.html', context={
-    #             'form': form
-    #         })
+# class ProjectTaskCreateView(FormView):
+#     template_name = 'task/task_create.html'
+#     form_class = TaskForm
+#
+#     def form_valid(self, form):
+#         self.tasks = form.save()
+#         return super().form_valid(form)
+#
+#     def get_success_url(self):
+#         return reverse('task_view', kwargs={'pk': self.tasks.pk})
+#
+#     def get(self, request):
+#         return render(request, 'task_create.html', context={
+#             'form': TaskForm()
+#         })
+#
+#     def post(self, request):
+#         form = TaskForm(data=request.POST)
+#         if form.is_valid():
+#             data = {}
+#             for key, value in form.cleaned_data.items():
+#                 if value is not None:
+#                     data[key] = value
+#             task = Task.objects.create(**data)
+#             return redirect('task_view', pk=task.pk)
+#         else:
+#             return render(request, 'task_create.html', context={
+#                 'form': form
+#             })
 
 
 class TaskUpdateView(FormView):
-    template_name = 'task_update.html'
+    template_name = 'task/task_update.html'
     form_class = TaskForm
 
 
@@ -148,7 +147,7 @@ class TaskUpdateView(FormView):
 
 
 class TaskDeleteView(TemplateView):
-    template_name = 'task_delete.html'
+    template_name = 'task/task_delete.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -161,6 +160,19 @@ class TaskDeleteView(TemplateView):
         task = get_object_or_404(Task, pk=pk)
         task.delete()
         return redirect('index')
+
+
+class ProjectTaskCreateView(CreateView):
+    model = Task
+    template_name = 'task/task_create.html'
+    form_class = TaskForm
+
+    def form_valid(self, form):
+        task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+        task = form.save(commit=False)
+        task.project = task
+        task.save()
+        return redirect('task_view', pk=task.pk)
 
 
 

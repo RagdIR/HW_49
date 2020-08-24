@@ -1,31 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Задачи{% endblock %}
+{% block title %}Главная{% endblock %}
 
-{% block search %}
-            <div class="search-form">
-                <form action="{% url 'index' %}" method="GET">
-                    {{ form.search }}
-                    <input type="submit" value="Найти">
-                </form>
-            </div>
-{% endblock %}
+{#{% block search %}#}
+{#            <div class="search-form">#}
+{#                <form action="{% url 'index' %}" method="GET">#}
+{#                    {{ form.search }}#}
+{#                    <input type="submit" value="Найти">#}
+{#                </form>#}
+{#            </div>#}
+{#{% endblock %}#}
 
 {% block content %}
-    <h1>Задачи</h1>
+    <h1>Проекты</h1>
     {% if is_paginated %}
         {% include 'partial/pagination.html' %}
     {% endif %}
 
-    {% for task in tasks %}
-        <h3><a href="{% url "task_view" task.pk %}">{{ task.summary }}</a></h3>
-        <p>Статус: {{ task.status }}</p>
-        <p>Тип: {% for type in task.type.all %}
-    {{ type.title }}
-            {% if not forloop.last %}, {% endif %}
-    {% endfor %}</p>
-        <p>Добавлена: {{ task.created_at|date:"d.m.Y H:i:s" }} | Обновлена: {{ task.updated_at|date:"d.m.Y H:i:s" }}</p>
-        <p><a href="{% url 'task_update' task.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>
+    {% for project in projects %}
+        <h3><a href="{% url "project_view" project.pk %}">{{ project.description }}</a></h3>
+        <p>Дата начала: {{ project.start_date_at|date:"d.m.Y" }} | Дата окончания: {{ project.end_date_at|date:"d.m.Y" }}</p>
+{#        <p><a href="{% url 'task_update' task.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>#}
         <hr>
     {% endfor %}
 
