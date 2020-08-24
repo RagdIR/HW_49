@@ -31,6 +31,12 @@ class ProjectForm(forms.ModelForm):
     end_date_at = forms.DateTimeField(required=False, label='Дата окончания',
                                      input_formats=['%Y-%m-%d', BROWSER_DATE_FORMAT],
                                      widget=XDatepickerWidget)
+
+    # start_date_at = forms.DateField(required=False, label='Дата начала',
+    #                                  input_formats=['%Y-%m-%d', BROWSER_DATE_FORMAT])
+    #
+    # end_date_at = forms.DateField(required=False, label='Дата окончания',
+    #                                  input_formats=['%Y-%m-%d', BROWSER_DATE_FORMAT])
     class Meta:
         model = Project
         fields = ['title', 'description', 'start_date_at', 'end_date_at']
