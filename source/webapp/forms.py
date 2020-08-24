@@ -5,6 +5,12 @@ from django.utils.deconstruct import deconstructible
 from .models import Task, Project
 
 
+BROWSER_DATE_FORMAT = '%d.%m.%Y'
+
+
+class XDatepickerWidget(forms.TextInput):
+    template_name = 'widgets/xdatepicker_widget.html'
+
 @deconstructible
 class MinLengthValidator(BaseValidator):
     message = 'У записи "%(value)" символов %(show_value) ! Должно быть не меньше %(limit_value) символов!'
@@ -18,6 +24,13 @@ class MinLengthValidator(BaseValidator):
 
 
 class ProjectForm(forms.ModelForm):
+    start_date_at = forms.DateTimeField(required=False, label='Дата начала',
+                                     input_formats=['%Y-%m-%d', BROWSER_DATE_FORMAT],
+                                     widget=XDatepickerWidget)
+
+    end_date_at = forms.DateTimeField(required=False, label='Дата окончания',
+                                     input_formats=['%Y-%m-%d', BROWSER_DATE_FORMAT],
+                                     widget=XDatepickerWidget)
     class Meta:
         model = Project
         fields = ['title', 'description', 'start_date_at', 'end_date_at']
