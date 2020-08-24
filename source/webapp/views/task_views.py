@@ -168,11 +168,11 @@ class ProjectTaskCreateView(CreateView):
     form_class = TaskForm
 
     def form_valid(self, form):
-        task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
+        project = get_object_or_404(Project, pk=self.kwargs.get('pk'))
         task = form.save(commit=False)
-        task.project = task
+        task.project = project
         task.save()
-        return redirect('task_view', pk=task.pk)
+        return redirect('project_view', pk=project.pk)
 
 
 

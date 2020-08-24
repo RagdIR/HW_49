@@ -6,7 +6,7 @@
 {#    <li><a href="{% url 'project_update' task.pk %}">Изменить</a></li>#}
 {#    <li><a href="{% url 'project_delete' task.pk %}">Удалить</a></li>#}
 {#    <li><a href="{% url 'task_create' task.pk %}">Добавить задачу</a></li>#}
-    <li><a href="{% url 'project_task_create' task.pk %}">Add Comment</a></li>
+    <li><a href="{% url 'project_task_create' project.pk %}">Добавить задачу</a></li>
 {% endblock %}
 
 {% block content %}
