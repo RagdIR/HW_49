@@ -8,7 +8,7 @@ class Project(models.Model):
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Описание',
                                    validators=[symbols_20])
     start_date_at = models.DateField(verbose_name="Дата начала", blank=False)
-    end_date_at = models.DateField(verbose_name="Дата окончания", blank=True)
+    end_date_at = models.DateField(verbose_name="Дата окончания", null=True, blank=True)
 
     def __str__(self):
         return self.title
