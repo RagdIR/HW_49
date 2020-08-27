@@ -1,10 +1,10 @@
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm
-from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView
+from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.models import Project, Task
 
@@ -74,14 +74,18 @@ class ProjectCreateView(CreateView):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-# class ProjectTaskCreateView(CreateView):
-#     model = Project
-#     template_name = 'task/task_create.html'
-#     form_class = TaskForm
-#
-#     def form_valid(self, form):
-#         task = get_object_or_404(Task, pk=self.kwargs.get('pk'))
-#         comment = form.save(commit=False)
-#         comment.article = task
-#         comment.save()
-#         return redirect('task_view', pk=task.pk)
+class ProjectUpdateView(UpdateView):
+    model = Project
+    template_name = 'project/project_update.html'
+    form_class = ProjectForm
+    context_key = 'project'
+
+    def get_success_url(self):
+        return reverse('project_view', kwargs={'pk': self.object.pk})
+
+
+class ProjectDeleteView(DeleteView):
+    template_name = 'project/project_delete.html'
+    model = Project
+    context_object_name = 'project'
+    success_url = reverse_lazy('index')

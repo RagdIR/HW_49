@@ -6,7 +6,7 @@
     <h1>Добавить проект</h1>
 
     {% url "project_create" as action_url %}
-    {% include 'partial/form.html' with action_url=action_url form_method='post' %}
+    {% include 'partial/form.html' with action_url=action_url form_method='post' button_text='Добавить' %}
 
 
 {% endblock %}

@@ -19,6 +19,7 @@
         {% for task in tasks %}
                <h4><a href="{% url "task_view" task.pk %}">{{ task.summary }} ({{ task.created_at }})</a></h4>
                 <div class="pre">{{ task.description }}</div>
+                    <p><a href="{% url 'task_update' task.pk %}">Изменить</a> | <a href="{% url 'task_delete' task.pk %}">Удалить</a></p>
                 <hr>
         {% empty %}
             <p>Нет задач</p>

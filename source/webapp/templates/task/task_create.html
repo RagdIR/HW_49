@@ -7,7 +7,6 @@
 {##}
 {#    {% url "task_create" as action_url %}#}
 {#    {% include 'partial/form.html' with action_url=action_url form_method='post' %}#}
-    {% include 'partial/form.html' with form_method='post' %}
-{#    <p><input type="submit" value="Добавить"></p>#}
+    {% include 'partial/form.html' with form_method='post' button_text='Добавить' %}
 
 {% endblock %}

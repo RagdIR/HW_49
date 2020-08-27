@@ -5,6 +5,7 @@
 {% block menu %}
     <li><a href="{% url 'task_update' task.pk %}">Изменить</a></li>
     <li><a href="{% url 'task_delete' task.pk %}">Удалить</a></li>
+    <li><a href="{% url 'project_view' task.project.pk %}">Вернуться к проекту</a></li>
 {% endblock %}
 
 {% block content %}
@@ -17,4 +18,5 @@
     {% endfor %}
     </p>
     <p><b>Статус:</b> {{ task.status }}</p>
+
 {% endblock %}
