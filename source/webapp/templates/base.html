@@ -20,9 +20,13 @@
        <div class="container">
            <ul class="menu">
                <li><a href="{% url 'index' %}">Главная</a></li>
-               <li><a href="{% url 'project_create' %}">Добавить проект</a></li>
-
+               {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'project_create' %}">Добавить проект</a></li>
                {% block menu %}{% endblock %}
+                    <li><a href="{% url 'logout' %}">Выйти</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
            </ul>
 {#           {% block search %}#}
 {#           {% endblock %}#}
