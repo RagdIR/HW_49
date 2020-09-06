@@ -23,9 +23,11 @@
                {% if request.user.is_authenticated %}
                     <li><a href="{% url 'project_create' %}">Добавить проект</a></li>
                {% block menu %}{% endblock %}
-                    <li><a href="{% url 'logout' %}">Выйти</a></li>
+                    <li><a href="#">{{ request.user.get_full_name|default:request.user.username }}</a></li>
+                    <li><a href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Выйти</a></li>
                 {% else %}
-                    <li><a href="{% url 'login' %}">Войти</a></li>
+                    <li><a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Войти</a></li>
+                    <li><a href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Регистрация</a></li>
                 {% endif %}
            </ul>
 {#           {% block search %}#}
