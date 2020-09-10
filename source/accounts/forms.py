@@ -16,7 +16,9 @@ from django.core.validators import EMPTY_VALUES
 
 # def null_form(self):
 #     if self.object == '':
-#         raise ValidationError('Please fill in the field below.')
+#         raise ValidationError('Это поле должно быть заполнено.')
+
+
 # def null_form(self, form):
 #     if form is '':
 #         raise ('строка не может быть пустой')

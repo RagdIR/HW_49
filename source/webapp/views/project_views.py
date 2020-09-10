@@ -2,10 +2,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
 from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm
 from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView, UpdateView, DeleteView
-
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from webapp.models import Project, Task
 
 
@@ -65,16 +64,21 @@ class ProjectView(DetailView):
             return tasks, None, False
 
 
-class ProjectCreateView(LoginRequiredMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'project/project_create.html'
     form_class = ProjectForm
     model = Project
+    permission_required = 'webapp.create_project'
+
+    def has_permission(self):
+        project = self.get_object()
+        return super().has_permission() or project.user == self.request.user
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(PermissionRequiredMixin, UpdateView):
     model = Project
     template_name = 'project/project_update.html'
     form_class = ProjectForm
@@ -84,7 +88,7 @@ class ProjectUpdateView(LoginRequiredMixin, UpdateView):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'project/project_delete.html'
     model = Project
     context_object_name = 'project'

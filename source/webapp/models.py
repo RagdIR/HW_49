@@ -1,8 +1,10 @@
 from django.db import models
 from .validations import symbols_3, symbols_20
+from django.contrib.auth.models import User
 
 
 class Project(models.Model):
+    user = models.ManyToManyField(User, related_name='projects', verbose_name='Пользователь')
     title = models.CharField(max_length=300, null=False, blank=False, verbose_name='Название',
                                validators=[symbols_3])
     description = models.TextField(max_length=3000, null=False, blank=False, verbose_name='Описание',
