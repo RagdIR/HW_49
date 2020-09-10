@@ -1,55 +1,5 @@
 [
 {
-  "model": "webapp.project",
-  "pk": 1,
-  "fields": {
-    "title": "Work",
-    "description": "Bla bla bla blab bla bla bla bla bla bla bla bla bla",
-    "start_date_at": "2020-08-22",
-    "end_date_at": "2020-09-04"
-  }
-},
-{
-  "model": "webapp.project",
-  "pk": 2,
-  "fields": {
-    "title": "fgvfsgfsdv",
-    "description": "ERtewjehhwk jkke hj j hjkj h hh hjkhjhjkh hjkhjk",
-    "start_date_at": "2020-08-22",
-    "end_date_at": "2020-08-31"
-  }
-},
-{
-  "model": "webapp.project",
-  "pk": 3,
-  "fields": {
-    "title": "sdsgsgdsgf",
-    "description": "\u041f\u0420\u043f\u0440\u043f\u0440\u043e\u043f\u043f \u043e\u0440\u043f\u0440\u0438\u0442\u044c\u0438\u0442\u044c\u0442\u044c \u0442\u0442\u0438\u043c\u0440\u043f\u0438\u0442  \u043c\u0438\u0442",
-    "start_date_at": "2020-08-04",
-    "end_date_at": "2020-08-29"
-  }
-},
-{
-  "model": "webapp.project",
-  "pk": 4,
-  "fields": {
-    "title": "This is hte fourth \u043f\u0440\u043e\u0435\u043a\u0442ed!",
-    "description": "ghjghghghgh  ghjg h ghg hjghjghk ghk ghj ghkghj ghghk ghj gj ghj ghjg hjghj ghjghjghg hkg",
-    "start_date_at": "2020-08-03",
-    "end_date_at": "2020-09-26"
-  }
-},
-{
-  "model": "webapp.project",
-  "pk": 5,
-  "fields": {
-    "title": "Reqwertuu",
-    "description": "qwertyuiop asdfghjkl zxcvbnm",
-    "start_date_at": "2020-09-05",
-    "end_date_at": "2020-10-24"
-  }
-},
-{
   "model": "webapp.task",
   "pk": 7,
   "fields": {
@@ -291,7 +241,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$150000$GkSW8HGGUEve$bwWIk0djS2LtNDMFWw/BMTwSgLLBxmgfCGuKoFGSqXs=",
-    "last_login": "2020-08-22T08:20:59.573Z",
+    "last_login": "2020-09-09T15:25:53.054Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -302,6 +252,134 @@
     "date_joined": "2020-08-06T06:34:35.862Z",
     "groups": [],
     "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$T7AomIK6uinV$+f4uFxFuXNvcGow7yFqfkeRJe9HJ0P/M7lcs7Jfunvg=",
+    "last_login": "2020-09-06T07:25:51Z",
+    "is_superuser": false,
+    "username": "RagdIR",
+    "first_name": "Fedor",
+    "last_name": "Strogov",
+    "email": "ragdirstrogov@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-09-06T14:05:59Z",
+    "groups": [
+      1
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$bbJOF9PVuaMB$U0gzhyOKQo4IfO/jHotDct56/VGUxCQhkE+XzMFDDjc=",
+    "last_login": "2020-09-09T15:23:26Z",
+    "is_superuser": false,
+    "username": "S4astlivaya",
+    "first_name": "Lubov",
+    "last_name": "Strogova",
+    "email": "s4astlivaya@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-09-09T15:23:25Z",
+    "groups": [
+      2
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$150000$hvIEU3bnO832$qeg0TbMLEIvvjsyXJBLbl28MpdnGgOLBk1zSuFJa8wo=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "Viktor_P@vlov",
+    "first_name": "Viktor",
+    "last_name": "Pavlov",
+    "email": "pavlov_v@test.org",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2020-09-10T07:32:36Z",
+    "groups": [
+      3
+    ],
+    "user_permissions": []
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 1,
+  "fields": {
+    "title": "Work",
+    "description": "Bla bla bla blab bla bla bla bla bla bla bla bla bla",
+    "start_date_at": "2020-08-22",
+    "end_date_at": "2020-09-04",
+    "user": []
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 2,
+  "fields": {
+    "title": "fgvfsgfsdv",
+    "description": "ERtewjehhwk jkke hj j hjkj h hh hjkhjhjkh hjkhjk",
+    "start_date_at": "2020-08-22",
+    "end_date_at": "2020-08-31",
+    "user": []
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 3,
+  "fields": {
+    "title": "sdsgsgdsgf",
+    "description": "\u041f\u0420\u043f\u0440\u043f\u0440\u043e\u043f\u043f \u043e\u0440\u043f\u0440\u0438\u0442\u044c\u0438\u0442\u044c\u0442\u044c \u0442\u0442\u0438\u043c\u0440\u043f\u0438\u0442  \u043c\u0438\u0442",
+    "start_date_at": "2020-08-04",
+    "end_date_at": "2020-08-29",
+    "user": []
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 4,
+  "fields": {
+    "title": "This is hte fourth \u043f\u0440\u043e\u0435\u043a\u0442ed!",
+    "description": "ghjghghghgh  ghjg h ghg hjghjghk ghk ghj ghkghj ghghk ghj gj ghj ghjg hjghj ghjghjghg hkg",
+    "start_date_at": "2020-08-03",
+    "end_date_at": "2020-09-26",
+    "user": []
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 5,
+  "fields": {
+    "title": "Reqwertuu",
+    "description": "qwertyuiop asdfghjkl zxcvbnm",
+    "start_date_at": "2020-09-05",
+    "end_date_at": "2020-10-24",
+    "user": [
+      2
+    ]
+  }
+},
+{
+  "model": "webapp.project",
+  "pk": 6,
+  "fields": {
+    "title": "\u041f\u043b\u0435\u0434",
+    "description": "\u041f\u0440\u043e\u0441\u0442\u043e \u043f\u043b\u0435\u0434, \u0431\u043e\u043b\u044c\u0448\u043e\u0439 \u0438 \u043a\u043b\u0435\u0442\u0447\u0430\u0442\u044b\u0439",
+    "start_date_at": "2020-09-30",
+    "end_date_at": "2020-11-21",
+    "user": []
   }
 }
 ]

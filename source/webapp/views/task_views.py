@@ -5,7 +5,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, TemplateView, FormView, CreateView, DeleteView, UpdateView
 from webapp.models import Task, Project
 from webapp.forms import TaskForm, SimpleSearchForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 # class IndexView(ListView):
@@ -147,11 +147,14 @@ class TaskView(TemplateView):
     #         })
 
 
-class TaskUpdateView(LoginRequiredMixin, UpdateView):
+class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Task
     template_name = 'task/task_update.html'
     form_class = TaskForm
     # context_object_name = 'task'
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.update_task') or self.get_object().user == self.request.user
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.project.pk})
@@ -172,10 +175,14 @@ class TaskUpdateView(LoginRequiredMixin, UpdateView):
 #         return redirect('index')
 
 
-class TaskDeleteView(LoginRequiredMixin, DeleteView):
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     template_name = 'task/task_delete.html'
     model = Task
     context_object_name = 'task'
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_task') or self.get_object().user == self.request.user
+
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.project.pk})
 
@@ -192,10 +199,15 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     #     return redirect('index')
 
 
-class ProjectTaskCreateView(LoginRequiredMixin, CreateView):
+class ProjectTaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Task
     template_name = 'task/task_create.html'
     form_class = TaskForm
+
+    def test_func(self):
+        return self.request.user.has_perm('webapp.delete_task') or self.get_object().user == self.request.user
+
+
 
     def form_valid(self, form):
         project = get_object_or_404(Project, pk=self.kwargs.get('pk'))

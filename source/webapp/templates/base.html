@@ -21,7 +21,7 @@
            <ul class="menu">
                <li><a href="{% url 'index' %}">Главная</a></li>
                {% if request.user.is_authenticated %}
-                    <li><a href="{% url 'project_create' %}">Добавить проект</a></li>
+                    {% if perms.webapp.create_project or project.user == request.user %}<li><a href="{% url 'project_create' %}">Добавить проект</a></li>{% endif %}
                {% block menu %}{% endblock %}
                     <li><a href="#">{{ request.user.get_full_name|default:request.user.username }}</a></li>
                     <li><a href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Выйти</a></li>
