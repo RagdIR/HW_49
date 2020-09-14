@@ -6,7 +6,7 @@
 {#    <li><a href="{% url 'project_update' task.pk %}">Изменить</a></li>#}
 {#    <li><a href="{% url 'project_delete' task.pk %}">Удалить</a></li>#}
 {#    <li><a href="{% url 'task_create' task.pk %}">Добавить задачу</a></li>#}
-    {% if perms.webapp.create_task or project.user == request.user %}<li><a href="{% url 'project_task_create' project.pk %}">Добавить задачу</a></li>{% endif %}
+    {% if perms.webapp.create_task and request.user in project.task.user.all %}<li><a href="{% url 'project_task_create' project.pk %}">Добавить задачу</a></li>{% endif %}
 {% endblock %}
 
 {% block content %}
@@ -20,7 +20,7 @@
                <h4><a href="{% url "task_view" task.pk %}">{{ task.summary }} ({{ task.created_at }})</a></h4>
                 <div class="pre">{{ task.description }}</div>
             {% if request.user.is_authenticated %}
-                    {% if perms.webapp.update_task or project.user == request.user %}<p><a href="{% url 'task_update' task.pk %}">Изменить</a>{% endif %} | {% if perms.webapp.delete_task or project.user == request.user %}<a href="{% url 'task_delete' task.pk %}">Удалить</a>{% endif %}</p>
+                    {% if perms.webapp.update_task and request.user in project.task.user.all %}<p><a href="{% url 'task_update' task.pk %}">Изменить</a>{% endif %} | {% if perms.webapp.delete_task and request.user in project.task.user.all %}<a href="{% url 'task_delete' task.pk %}">Удалить</a>{% endif %}</p>
             {% endif %}
                 <hr>
         {% empty %}

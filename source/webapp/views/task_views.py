@@ -147,14 +147,14 @@ class TaskView(TemplateView):
     #         })
 
 
-class TaskUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class TaskUpdateView(UserPassesTestMixin, UpdateView):
     model = Task
     template_name = 'task/task_update.html'
     form_class = TaskForm
     # context_object_name = 'task'
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.update_task') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.update_task') and self.request.user in self.get_object().project.user.all()
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.project.pk})

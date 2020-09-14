@@ -1,0 +1,10 @@
+{% block menu %}
+{% endblock %}
+
+{% block content %}
+    <div class="form">
+        <h1>Пользователи проекта:</h1>
+        {% url "user_add" pk=project.pk as action_url %}
+        {% include 'partial/form.html' with action_url=action_url form_method='post' button_text='Изменить' %}
+    </div>
+{% endblock %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from .validations import symbols_3, symbols_20
 from django.contrib.auth.models import User
 
@@ -18,6 +19,9 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
+        permissions = [('change_group', 'Изменить состав группы')]
+
+
 
 
 

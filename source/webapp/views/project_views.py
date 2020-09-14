@@ -1,8 +1,9 @@
+from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm
+from webapp.forms import SimpleSearchForm, ProjectForm, TaskForm, ProjectUserForm
 from django.views.generic import ListView, TemplateView, FormView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from webapp.models import Project, Task
@@ -64,17 +65,18 @@ class ProjectView(DetailView):
             return tasks, None, False
 
 
-class ProjectCreateView(PermissionRequiredMixin, UserPassesTestMixin, CreateView):
+class ProjectCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'project/project_create.html'
     form_class = ProjectForm
     model = Project
+    permission_required = 'webapp.add_project'
 
     # def test_func(self):
     #     return self.request.user.has_perm('webapp.create_project') or self.get_object().user == self.request.user
 
-    def has_permission(self):
-        project = self.get_object()
-        return super().has_permission() or project.user == self.request.user
+    # def has_permission(self):
+    #     project = self.get_object()
+    #     return super().has_permission() or project.user == self.request.user
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.pk})
@@ -100,3 +102,23 @@ class ProjectDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView
 
     def test_func(self):
         return self.request.user.has_perm('webapp.delete_project') or self.get_object().user == self.request.user
+
+
+class ProjectUserUpdate(PermissionRequiredMixin, UpdateView):
+    template_name = 'project/project_users.html'
+    model = Project
+    form_class = ProjectUserForm
+    permission_required = 'webapp.change_group'
+
+    def has_permission(self):
+        project = self.get_object()
+        return super().has_permission() and self.request.user in project.user.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['users'] = User
+        return context
+
+    def get_success_url(self):
+        return reverse('project_view', kwargs={'pk': self.object.pk})
+
