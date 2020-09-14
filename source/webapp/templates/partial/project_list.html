@@ -9,7 +9,7 @@
                 <a href="{% url 'accounts:detail' project.user_id %}">{{ project.user }}</a>
                 | {{ project.start_date_at|date:"d.m.Y" }}
             </p>
-            <p>Дедлайн: {{ зкщоусе.утв_date_at|date:"d.m.Y" }}</p>
+            <p>Дедлайн: {{ project.end_date_at|date:"d.m.Y" }}</p>
             {% if perms.webapp.change_project or project.user == request.user %}
                 <p><a href="{% url 'webapp:project_update' project.pk %}">Изменить</a></p>
             {% endif %}

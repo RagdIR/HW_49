@@ -14,6 +14,8 @@
     <p><b>Описание:</b> {{ project.description }}</p>
     <p><b>Дата начала:</b> {{ project.start_date_at|date:"d.m.Y" }}</p>
     <p><b>Дата окончания:</b> {{ project.end_date_at|date:"d.m.Y" }}</p>
+            <p>Создан пользователем:
+            <a href="{% url 'accounts:detail' project.user_id %}">{{ project.user }}</a>
             <h3>Задачи:</h3>
 
         {% for task in tasks %}
