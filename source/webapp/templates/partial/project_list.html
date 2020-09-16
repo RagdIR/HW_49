@@ -4,17 +4,17 @@
 
     {% for project in projects %}
         <div class="box">
-            <h3><a href="{% url "webapp:project_view" project.pk %}">{{ project.title }}</a></h3>
+            <h3><a href="{% url "project_view" project.pk %}">{{ project.title }}</a></h3>
             <p>
-                <a href="{% url 'accounts:detail' project.user_id %}">{{ project.user }}</a>
+                <a href="#">{{ project.user }}</a>
                 | {{ project.start_date_at|date:"d.m.Y" }}
             </p>
             <p>Дедлайн: {{ project.end_date_at|date:"d.m.Y" }}</p>
             {% if perms.webapp.change_project or project.user == request.user %}
-                <p><a href="{% url 'webapp:project_update' project.pk %}">Изменить</a></p>
+                <p><a href="{% url 'project_update' project.pk %}">Изменить</a></p>
             {% endif %}
             {% if perms.webapp.delete_project or project.user == request.user %}
-                <p><a href="{% url 'webapp:project_delete' project.pk %}">Удалить</a></p>
+                <p><a href="{% url 'project_delete' project.pk %}">Удалить</a></p>
             {% endif %}
         </div>
     {% empty %}

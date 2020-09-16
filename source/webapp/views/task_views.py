@@ -175,13 +175,13 @@ class TaskUpdateView(UserPassesTestMixin, UpdateView):
 #         return redirect('index')
 
 
-class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class TaskDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'task/task_delete.html'
     model = Task
     context_object_name = 'task'
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.delete_task') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.delete_task') and self.request.user in self.get_object().project.user.all()
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.project.pk})
@@ -199,7 +199,7 @@ class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     #     return redirect('index')
 
 
-class ProjectTaskCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class ProjectTaskCreateView(UserPassesTestMixin, CreateView):
     model = Task
     template_name = 'task/task_create.html'
     form_class = TaskForm

@@ -82,26 +82,26 @@ class ProjectCreateView(PermissionRequiredMixin, CreateView):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectUpdateView(PermissionRequiredMixin, UserPassesTestMixin, UpdateView):
+class ProjectUpdateView(UserPassesTestMixin, UpdateView):
     model = Project
     template_name = 'project/project_update.html'
     form_class = ProjectForm
     context_key = 'project'
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.update_project') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.update_project')
 
     def get_success_url(self):
         return reverse('project_view', kwargs={'pk': self.object.pk})
 
 
-class ProjectDeleteView(PermissionRequiredMixin, UserPassesTestMixin, DeleteView):
+class ProjectDeleteView(UserPassesTestMixin, DeleteView):
     template_name = 'project/project_delete.html'
     model = Project
     success_url = reverse_lazy('index')
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.delete_project') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.delete_project')
 
 
 class ProjectUserUpdate(PermissionRequiredMixin, UpdateView):

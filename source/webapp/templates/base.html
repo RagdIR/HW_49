@@ -20,15 +20,23 @@
        <div class="container">
            <ul class="menu">
                <li><a href="{% url 'index' %}">Главная</a></li>
+
                {% if request.user.is_authenticated %}
                     {% if perms.webapp.create_project or project.user == request.user %}<li><a href="{% url 'project_create' %}">Добавить проект</a></li>{% endif %}
+                   {% if perms.accounts.perm_user %}<li><a href="{% url 'accounts:users' %}">Пользователи</a></li>{% endif %}
                {% block menu %}{% endblock %}
-                    <li><a href="#">{{ request.user.get_full_name|default:request.user.username }}</a></li>
+               {% endif %}
+                   {% block auth_menu %}
+                    {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user.get_full_name|default:request.user.username }}</a></li>
                     <li><a href="{% url 'accounts:logout' %}?next={{ request.get_full_path }}">Выйти</a></li>
+
+
                 {% else %}
                     <li><a href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Войти</a></li>
                     <li><a href="{% url 'accounts:create' %}?next={{ request.get_full_path }}">Регистрация</a></li>
                 {% endif %}
+                    {% endblock %}
            </ul>
 {#           {% block search %}#}
 {#           {% endblock %}#}

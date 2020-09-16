@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from django.forms import EmailField, TextInput, CharField
 from django.core.validators import EMPTY_VALUES
+from django import forms
 
 
 # class EmailField(forms.EmailField):
@@ -29,8 +30,9 @@ class MyUserCreationForm(UserCreationForm):
     email = EmailField(required=True)
     # first_name = null_form(form)
     last_name = CharField(required=True)
+    url_profile = forms.URLField(label='Ссылка на GitHub', required=False)
 
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'password1', 'password2',
-                  'first_name', 'last_name', 'email']
+                  'first_name', 'last_name', 'email', 'url_profile']
 
