@@ -18,7 +18,8 @@
     {% endif %}
 
     {% for project in projects %}
-        <h3><a href="{% url "project_view" project.pk %}">{{ project.description }}</a></h3>
+        <h3><a href="{% url "project_view" project.pk %}">{{ project.title }}</a></h3>
+        <p>Описание: {{ project.description }}</p>
         <p>Дата начала: {{ project.start_date_at|date:"d.m.Y" }} | Дата окончания: {{ project.end_date_at|date:"d.m.Y" }}</p>
         {% if request.user.is_authenticated %}
             {% if perms.webapp.change_project or project.user == request.user %}<p><a href="{% url 'project_update' project.pk %}">Изменить</a>{% endif %} | {% if perms.webapp.delete_project or project.user == request.user %}<a href="{% url 'project_delete' project.pk %}">Удалить</a></p>{% endif %}
