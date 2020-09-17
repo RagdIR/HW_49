@@ -205,7 +205,7 @@ class ProjectTaskCreateView(UserPassesTestMixin, CreateView):
     form_class = TaskForm
 
     def test_func(self):
-        return self.request.user.has_perm('webapp.delete_task') or self.get_object().user == self.request.user
+        return self.request.user.has_perm('webapp.delete_task') and self.request.user in self.get_object().project.user.all()
 
 
 

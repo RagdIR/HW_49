@@ -3,6 +3,11 @@
 
 {% block title %}Пользователь{% endblock %}
 
+{% block menu %}
+    <li><a href="{% url 'accounts:change' user_obj.pk %}">Редактировать</a></li>
+    <li><a href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a></li>
+{% endblock %}
+
 {% block content %}
     <h1>Страница пользователя {{ user_obj.get_full_name|default:user_obj.username }}</h1>
     {% if user_obj.profile.avatar %}
@@ -12,7 +17,8 @@
     <p>Имя: {{ user_obj.first_name }}</p>
     <p>Фамилия: {{ user_obj.last_name }}</p>
     <p>Почта: {{ user_obj.email }}</p>
-    <p>Ссылка на GitHub: {{ user_obj.url_profile }}</p>
+    <p>Ссылка на GitHub: {{ user_obj.profile.url_profile }}</p>
+    <p>О себе: {{ user_obj.profile.about }}</p>
 
     <h2 class="text-center clear">Проекты пользователя:</h2>
     {% include 'partial/project_list.html' %}
