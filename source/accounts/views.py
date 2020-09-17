@@ -122,6 +122,8 @@ class UserPasswordChangeView(PermissionRequiredMixin, UpdateView):
     context_object_name = 'user_obj'
     permission_required = 'accounts:perm_user'
 
+    def get_object(self, queryset=None):
+        return self.request.user
 
     def get_success_url(self):
         return reverse('accounts:login')
