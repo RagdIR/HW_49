@@ -72,14 +72,14 @@ class UserList(PermissionRequiredMixin, ListView):
     context_object_name = 'users'
 
 
-class UserChangeView(UserPassesTestMixin, UpdateView):
+class UserChangeView(LoginRequiredMixin, UpdateView):
     model = get_user_model()
     form_class = UserChangeForm
     template_name = 'user_change.html'
     context_object_name = 'user_obj'
 
-    def test_func(self):
-        return self.request.user == self.get.object()
+    def get_object(self, queryset=None):
+        return self.request.user
 
     def get_context_data(self, **kwargs):
         if 'profile_form' not in kwargs:

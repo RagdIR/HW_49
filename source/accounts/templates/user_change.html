@@ -4,7 +4,7 @@
 
 {% block menu %}
     <li><a href="{% url "accounts:detail" user_obj.pk %}">Назад</a></li>
-    <li><a href="{% url "accounts:password_change" user_obj.pk %}">Смена пароля</a></li>
+    <li><a href="{% url "accounts:password_change" user_obj.pk %}">Изменить пароль</a></li>
 {% endblock %}
 
 {% block content %}
@@ -14,6 +14,6 @@
         {% include 'partial/form.html' with form=form fields_only=True %}
         {% include 'partial/form.html' with form=profile_form fields_only=True %}
         <br>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Изменить">
     </form>
 {% endblock %}
